@@ -10,8 +10,9 @@ cd "$(dirname "$0")" || exit 1
 import json, re, sys
 from collections import defaultdict
 
-TYPES = {"오케스트라 라이브러리", "Kontakt 라이브러리", "신스", "샘플러",
-         "EQ", "컴프", "리버브", "유틸", "기타"}
+TYPES = {"오케스트라 라이브러리", "Kontakt 라이브러리", "가상악기", "신스", "샘플러",
+         "EQ", "컴프", "리버브", "앰프·새츄레이션", "이펙트", "보컬", "MIDI 도구",
+         "마스터링", "유틸", "기타"}
 FORMATS = {"VST3", "VST2", "AU", "AAX"}
 LOCATIONS = {"windows", "mac"}
 REQUIRED = ["id", "name", "vendor", "type", "formats", "locations"]

@@ -3,7 +3,8 @@
   'use strict';
 
   var PLUGINS = (window.PLUGIN_DATA && window.PLUGIN_DATA.plugins) || [];
-  var TYPE_ORDER = ['오케스트라 라이브러리', 'Kontakt 라이브러리', '신스', '샘플러', 'EQ', '컴프', '리버브', '유틸', '기타'];
+  var TYPE_ORDER = ['오케스트라 라이브러리', 'Kontakt 라이브러리', '가상악기', '신스', '샘플러', 'EQ', '컴프', '리버브',
+                    '앰프·새츄레이션', '이펙트', '보컬', 'MIDI 도구', '마스터링', '유틸', '기타'];
   var FORMAT_ORDER = ['VST3', 'VST2', 'AU', 'AAX'];
   var LOCATIONS = [['windows', 'Windows'], ['mac', 'Mac']];
   var LOC_LABEL = { windows: 'Windows', mac: 'Mac' };
@@ -66,7 +67,9 @@
 
   function presentTypes() {
     var have = new Set(PLUGINS.map(function (p) { return p.type; }));
-    return TYPE_ORDER.filter(function (t) { return have.has(t); }).map(function (t) { return [t, t]; });
+    // 목록에 없는 종류가 생겨도 필터에서 빠지지 않게 뒤에 붙인다
+    var extra = Array.from(have).filter(function (t) { return TYPE_ORDER.indexOf(t) === -1; }).sort();
+    return TYPE_ORDER.filter(function (t) { return have.has(t); }).concat(extra).map(function (t) { return [t, t]; });
   }
   function presentFormats() {
     var have = new Set();

@@ -13,10 +13,12 @@ scan() {   # $1=포맷  $2=폴더  $3=확장자
   [ -d "$2" ] || return
   find "$2" -name "*.$3" -prune -print 2>/dev/null | while IFS= read -r p; do
     plist="$p/Contents/Info.plist"
-    ver=$($PB -c "Print :CFBundleShortVersionString" "$plist" 2>/dev/null)
-    bid=$($PB -c "Print :CFBundleIdentifier" "$plist" 2>/dev/null)
-    vendor=""
-    if [ "$1" = "AU" ]; then   # AU는 "제조사: 이름" 형태로 들어 있음
+    ver=""; bid=""; vendor=""
+    if [ -f "$plist" ]; then   # 없으면 PlistBuddy가 오류 문구를 출력하므로 건너뜀
+      ver=$($PB -c "Print :CFBundleShortVersionString" "$plist" 2>/dev/null)
+      bid=$($PB -c "Print :CFBundleIdentifier" "$plist" 2>/dev/null)
+    fi
+    if [ "$1" = "AU" ] && [ -f "$plist" ]; then   # AU는 "제조사: 이름" 형태로 들어 있음
       vendor=$($PB -c "Print :AudioComponents:0:name" "$plist" 2>/dev/null | cut -d: -f1)
     fi
     name=$(basename "$p" ".$3")

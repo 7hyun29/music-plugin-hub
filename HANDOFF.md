@@ -4,13 +4,13 @@
 마지막 갱신: 2026-11-25
 
 ## 현재 상태 한 줄
-사이트 화면 완성(샘플 데이터 3개), GitHub에 올림. 다음은 실제 플러그인 스캔 → 사이트 반영.
+Mac 실제 플러그인 47개 반영 완료(샘플 삭제). 다음은 Windows 스캔 반영 + 종류 검토.
 
 ## 저장소
 - GitHub: https://github.com/7hyun29/music-plugin-hub, 브랜치 `main`
 - 사이트 주소(GitHub Pages): https://7hyun29.github.io/music-plugin-hub/ — 두 컴퓨터 모두 이 주소를 즐겨찾기
   - 루트 index.html이 site/로 이동시킴. Pages 설정: main 브랜치 / (root)
-  - Pages를 무료로 쓰기 위해 저장소를 Public으로 전환하기로 함 (2026-11-25). 설정 완료 여부는 확인 안 됨
+  - 저장소 Public + Pages 켜짐 확인 (2026-11-25)
 - 사용 컴퓨터: Windows(Cubase Pro 15) + Mac(VEP 8, Logic) 두 대. 데이터를 고칠 때만 각자 `git clone`
 - 이전 문제: 로컬 파일을 즐겨찾기하면 컴퓨터마다 경로가 달라 다른 컴퓨터에서 "file couldn't be accessed" 오류 → Pages 주소로 해결
 - 평소 흐름: `git pull` → 수정 → `bash smoke.sh` → commit → `git push`
@@ -20,23 +20,30 @@
 - [x] 2. plugins.json 항목 확정 + smoke.sh
 - [x] 5. 화면 만들기 (검색, 필터, 카드/표 전환) — 사용자 요청으로 순서 앞당김
 - [x] GitHub 저장소 생성 + push
-- [ ] 3. 스캔 → plugins.json 반영 ← **다음 작업**
+- [~] 3. 스캔 → plugins.json 반영 — Mac 완료, **Windows 남음**
 - [ ] 4. 종류·태그·메모 채우기
 - [ ] 6. 별도 세션에서 리뷰 + smoke.sh로 SMOKE OK 확인
 
-## 다음 작업 (3단계) 상세
-제안해 둔 구조 — **사용자 확인 전**이므로 시작 전에 이대로 갈지 먼저 물어볼 것:
-- 두 컴퓨터가 plugins.json 한 파일을 동시에 고치면 git 충돌이 나기 쉬움. 그래서 파일을 나눔:
-  - `data/scan-windows.json`, `data/scan-mac.json`: 스캔 결과. 각 컴퓨터는 자기 파일만 고침
-  - `data/plugins.json`: 직접 쓰는 정보(종류·태그·메모·라이선스)
-  - `build.sh`가 셋을 합쳐 `locations`(windows/mac)를 자동으로 채움
-- 할 일:
-  1. scripts/scan_windows.ps1, scripts/scan_mac.sh 를 위 구조에 맞게 수정 (지금은 바탕화면에 CSV 저장하는 초안)
-  2. 같은 플러그인을 어떻게 한 항목으로 묶을지(이름·제조사 기준 id 생성) 정하기
-  3. build.sh 합치기 로직 + smoke.sh 검사 추가
-  4. 실제 목록이 들어오면 plugins.json의 샘플 3개 삭제 (삭제 전 사용자에게 물어볼 것)
-- 스캔 대상 경로와 Kontakt 라이브러리 처리 방법은 scripts/ 안의 두 스크립트 참고
-- scan_windows.ps1은 실제 Windows에서 아직 실행해 보지 않음 (작성 환경에 PowerShell 없음)
+## 스캔 반영 방식 (확정, 2026-11-25)
+- 사용자가 각 컴퓨터에서 스캔 → 바탕화면 CSV를 대화에 첨부 → Claude가 `python3 scripts/import_scan.py mac|windows <CSV>` 실행 → smoke → push
+  - (처음 제안했던 scan-windows.json / scan-mac.json 분리 구조는 쓰지 않음. 반영을 Claude 한 곳에서만 해서 충돌 걱정이 없음)
+- 묶기·이름·종류 기본값은 data/catalog.json. 새 플러그인이 "catalog.json에 없는 새 이름"으로 나오면 catalog에 추가 후 다시 import
+- import는 기존 항목의 종류·태그·메모를 덮지 않음. 스캔에 없는 항목도 지우지 않고 목록만 출력
+- 설치 경로는 저장하지 않음
+
+## 다음 할 일
+1. Windows 스캔: `powershell -ExecutionPolicy Bypass -File .\scripts\scan_windows.ps1` → plugins_windows.csv 받아서 import
+   - scan_windows.ps1은 실제 Windows에서 아직 한 번도 안 돌려봄. 오류 나면 고칠 것
+   - Windows 이름이 Mac과 다르면(예: `Kontakt 8` vs `Kontakt 8 (64bit)`) catalog.json patterns로 같은 id에 묶을 것
+2. 사용자에게 종류 검토받기. 확신 없어서 `기타`로 둔 것: Cymatics Dark Sky, Cymatics Pandora, Replicate, Waves(WaveShell). MinimogueVA 제조사 모름
+3. 태그·메모는 사용자가 말하는 대로 plugins.json에 직접 입력
+
+## Mac 스캔에서 알게 된 것
+- Mac에 Command Line Tools 설치 실패 ("not currently available from the software update server") → Mac에 git·python3 없음
+  - 스캔은 git 없이 가능: `curl -O https://raw.githubusercontent.com/7hyun29/music-plugin-hub/main/scripts/scan_mac.sh && bash scan_mac.sh`
+- 같은 제품 묶음: VEP 8(본체·Event/Audio Input·Surround), Microtonic+Multi, Reaktor 6+FX, Synth V 본체+ARA, ACE Bridge 2+ARA, Ozone 11 훅, WaveShell 15.5/17.1, UADx(NI 목록 이름으로 표시)
+- 버전은 AAX 외 포맷 우선 (Omnisphere·Keyscape·Trilian AAX는 번호 체계가 다름). Serum 2 AAX만 2.0.24로 다른 포맷(2.1.5)보다 낮음
+- Mac Kontakt 라이브러리는 NI Service Center 목록에서 Abbey Road Two 하나만 잡힘
 
 ## 사이트 동작
 - site/index.html을 더블클릭으로 열면 됨 (서버 불필요)
