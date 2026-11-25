@@ -11,7 +11,11 @@
 - 라이선스 시리얼·비밀번호는 어떤 파일에도 쓰지 않기
 - 화면은 data/plugins.json을 보여주기만 함. 데이터를 화면 코드에 직접 쓰지 않기
 
+- plugins.json 수정 후에는 `bash smoke.sh` (형식 검사 + site/data.js 재생성)
+- site/data.js는 자동 생성 파일. 직접 고치지 않기
+
 # 문서 지도
+- 사이트: site/index.html (브라우저로 바로 열기) / site/app.js / site/style.css
 - 진행 상황·다음 할 일: HANDOFF.md (세션 끝날 때 반드시 갱신)
 - 디자인 규칙: design.md
 - 데이터 형식: data/SCHEMA.md / 데이터: data/plugins.json

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>음악 플러그인 허브</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="title-row">
+    <h1>음악 플러그인 허브</h1>
+    <span id="count" class="muted"></span>
+    <div class="view-toggle" role="group" aria-label="보기 전환">
+      <button type="button" data-view="card">카드</button>
+      <button type="button" data-view="table">표</button>
+    </div>
+  </div>
+  <input id="search" type="search" placeholder="이름, 제조사, 태그, 메모 검색  ( / 키로 바로 입력 )" autocomplete="off" autofocus>
+  <div class="filters">
+    <div class="filter-group"><span class="filter-label">종류</span><div id="f-type" class="chips"></div></div>
+    <div class="filter-group"><span class="filter-label">설치 위치</span><div id="f-loc" class="chips"></div></div>
+    <div class="filter-group"><span class="filter-label">포맷</span><div id="f-fmt" class="chips"></div></div>
+  </div>
+</header>
+<main id="list"></main>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

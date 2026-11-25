@@ -1,0 +1,65 @@
+// 자동 생성 파일 — 직접 고치지 말 것. data/plugins.json 수정 후 bash build.sh
+window.PLUGIN_DATA = {
+ "version": 1,
+ "plugins": [
+  {
+   "id": "kontakt-8",
+   "name": "Kontakt 8",
+   "vendor": "Native Instruments",
+   "version": "8.x",
+   "type": "샘플러",
+   "formats": [
+    "VST3",
+    "AU",
+    "AAX"
+   ],
+   "locations": [
+    "windows",
+    "mac"
+   ],
+   "license": "Native Access",
+   "tags": [
+    "스트링 편곡",
+    "게임 BGM"
+   ],
+   "note": "샘플 데이터 — 실제 목록으로 교체 예정"
+  },
+  {
+   "id": "fabfilter-pro-q-4",
+   "name": "Pro-Q 4",
+   "vendor": "FabFilter",
+   "version": "",
+   "type": "EQ",
+   "formats": [
+    "VST3",
+    "AU"
+   ],
+   "locations": [
+    "windows",
+    "mac"
+   ],
+   "license": "FabFilter 계정",
+   "tags": [
+    "믹싱"
+   ],
+   "note": "샘플 데이터 — 실제 목록으로 교체 예정"
+  },
+  {
+   "id": "sample-kontakt-library",
+   "name": "예시 스트링 라이브러리",
+   "vendor": "예시 제조사",
+   "version": "",
+   "type": "Kontakt 라이브러리",
+   "formats": [],
+   "locations": [
+    "mac"
+   ],
+   "license": "Native Access",
+   "tags": [
+    "스트링 편곡",
+    "VEP용"
+   ],
+   "note": "샘플 데이터 — 실제 목록으로 교체 예정"
+  }
+ ]
+};

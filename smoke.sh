@@ -1,7 +1,7 @@
 #!/bin/bash
 # 데이터 형식 검사. 통과하면 마지막 줄에 SMOKE OK 출력.
 # 실행: bash smoke.sh   (python3 필요)
-# 화면이 생기면(5단계) 빌드 확인을 여기에 추가할 것.
+# 순서: 데이터 형식 검사 → build.sh로 site/data.js 생성 → 화면 파일 확인
 
 cd "$(dirname "$0")" || exit 1
 
@@ -84,6 +84,15 @@ if errors:
     sys.exit(1)
 print(f"플러그인 {len(plugins)}개, 태그 {len(tag_forms)}종 확인")
 PY
-status=$?
-[ $status -eq 0 ] && echo "SMOKE OK"
-exit $status
+[ $? -eq 0 ] || exit 1
+
+# 빌드 확인: data.js 생성 + 화면 파일 존재
+bash build.sh || exit 1
+for f in site/index.html site/style.css site/app.js site/data.js; do
+  [ -s "$f" ] || { echo "FAIL: $f 없음"; exit 1; }
+done
+if command -v node >/dev/null 2>&1; then
+  node --check site/app.js || { echo "FAIL: site/app.js 문법 오류"; exit 1; }
+  node --check site/data.js || { echo "FAIL: site/data.js 문법 오류"; exit 1; }
+fi
+echo "SMOKE OK"
