@@ -4,7 +4,7 @@
 마지막 갱신: 2026-11-25
 
 ## 현재 상태 한 줄
-Mac 47개 반영 + ChatGPT 리뷰 1차 반영(데이터 v2 기기별 설치 기록, 접근성, 검색, 좁은 화면). 다음은 Windows 스캔 반영 + 종류 검토.
+Mac·Windows 스캔 모두 반영(전체 65개: 양쪽 8, Windows만 18, Mac만 39) + 리뷰 반영 + 아이콘. 다음은 종류·제조사 검토와 태그·메모 입력.
 
 ## 저장소
 - GitHub: https://github.com/7hyun29/music-plugin-hub, 브랜치 `main`
@@ -20,7 +20,7 @@ Mac 47개 반영 + ChatGPT 리뷰 1차 반영(데이터 v2 기기별 설치 기�
 - [x] 2. plugins.json 항목 확정 + smoke.sh
 - [x] 5. 화면 만들기 (검색, 필터, 카드/표 전환) — 사용자 요청으로 순서 앞당김
 - [x] GitHub 저장소 생성 + push
-- [~] 3. 스캔 → plugins.json 반영 — Mac 완료, **Windows 남음**
+- [x] 3. 스캔 → plugins.json 반영 — Mac·Windows 완료 (2026-11-25)
 - [ ] 4. 종류·태그·메모 채우기
 - [ ] 6. 별도 세션에서 리뷰 + smoke.sh로 SMOKE OK 확인
 
@@ -42,11 +42,16 @@ Mac 47개 반영 + ChatGPT 리뷰 1차 반영(데이터 v2 기기별 설치 기�
 - 검증은 작업 환경의 임시 스크립트(Playwright + Chrome)로 함. 저장소에는 넣지 않음 (새 도구 추가 허락 필요)
 
 ## 다음 할 일
-1. Windows 스캔: `powershell -ExecutionPolicy Bypass -File .\scripts\scan_windows.ps1` → plugins_windows.csv 받아서 import
-   - scan_windows.ps1은 실제 Windows에서 아직 한 번도 안 돌려봄. 오류 나면 고칠 것
-   - Windows 이름이 Mac과 다르면(예: `Kontakt 8` vs `Kontakt 8 (64bit)`) catalog.json patterns로 같은 id에 묶을 것
-2. 사용자에게 종류 검토받기. 확신 없어서 `기타`로 둔 것: Cymatics Dark Sky, Cymatics Pandora, Replicate, Waves(WaveShell). MinimogueVA 제조사 모름
+1. (완료) Windows 스캔 반영. scan_windows.ps1은 첫 실행에서 오류 없이 동작함 (UTF-8 BOM 필요 — PowerShell 5.1 한글)
+   - Windows 스캔 방법(git 없이): 바탕화면에서 `Invoke-WebRequest <raw scan_windows.ps1> -OutFile scan_windows.ps1` → `powershell -ExecutionPolicy Bypass -File .\scan_windows.ps1`
+2. 사용자에게 종류 검토받기. 확신 없어서 `기타`로 둔 것: Cymatics Dark Sky, Cymatics Pandora, Replicate, Waves(WaveShell), Sonescent Motion. 제조사 모름: MinimogueVA, Glade Studio
 3. 태그·메모는 사용자가 말하는 대로 plugins.json에 직접 입력
+
+## Windows 스캔에서 알게 된 것
+- Windows Kontakt 라이브러리는 레지스트리에서 7개 잡힘 (F: 드라이브). Mac은 Abbey Road Two 하나뿐
+- VEP는 Windows 이름에 ` x64`가 붙음 → patterns `^Vienna Ensemble Pro`로 묶임. Windows VEP는 버전 정보 없음
+- WaveLab 버전 값 끝에 따옴표가 붙어 나옴 → import_scan.py에서 제거
+- NTKDaemon(NI 백그라운드 서비스)은 ignore. Massive X Factory Library는 Massive X에 묶음
 
 ## Mac 스캔에서 알게 된 것
 - Mac에 Command Line Tools 설치 실패 ("not currently available from the software update server") → Mac에 git·python3 없음

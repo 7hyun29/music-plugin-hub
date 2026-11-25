@@ -60,7 +60,7 @@ def main():
             g = found.setdefault(pid, {"raw": name, "formats": set(), "versions": [], "vendor": ""})
             fmt = (row.get("format") or "").strip()
             # "1.6.6 f482751207", "4.03.0[10528]" 같은 빌드 번호는 떼어낸다
-            ver = re.split(r"[\s\[]", (row.get("version") or "").strip())[0]
+            ver = re.split(r"[\s\[]", (row.get("version") or "").strip().strip('"'))[0].strip('"')
             if fmt in FORMAT_ORDER:
                 g["formats"].add(fmt)
                 if ver and not BAD_VERSION.search(ver):
