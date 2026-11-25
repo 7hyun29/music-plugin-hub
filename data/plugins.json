@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "plugins": [
+    {
+      "id": "kontakt-8",
+      "name": "Kontakt 8",
+      "vendor": "Native Instruments",
+      "version": "8.x",
+      "type": "샘플러",
+      "formats": ["VST3", "AU", "AAX"],
+      "locations": ["win-cubase", "mac-vep"],
+      "license": "Native Access",
+      "tags": ["스트링 편곡", "게임 BGM"],
+      "note": "샘플 데이터 — 실제 목록으로 교체 예정"
+    },
+    {
+      "id": "fabfilter-pro-q-4",
+      "name": "Pro-Q 4",
+      "vendor": "FabFilter",
+      "version": "",
+      "type": "EQ",
+      "formats": ["VST3", "AU"],
+      "locations": ["win-cubase", "mac-logic"],
+      "license": "FabFilter 계정",
+      "tags": ["믹싱"],
+      "note": "샘플 데이터 — 실제 목록으로 교체 예정"
+    },
+    {
+      "id": "valhalla-room",
+      "name": "ValhallaRoom",
+      "vendor": "Valhalla DSP",
+      "version": "",
+      "type": "리버브",
+      "formats": ["VST3", "AU"],
+      "locations": ["mac-vep"],
+      "license": "",
+      "tags": ["믹싱"],
+      "note": "샘플 데이터 — 실제 목록으로 교체 예정"
+    }
+  ]
+}

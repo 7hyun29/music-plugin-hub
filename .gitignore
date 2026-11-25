@@ -1,0 +1,5 @@
+# 스캔 원본·임시 파일
+*.csv
+.DS_Store
+Thumbs.db
+node_modules/
