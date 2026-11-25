@@ -1,11 +1,12 @@
 #!/bin/bash
 # 데이터 형식 검사. 통과하면 마지막 줄에 SMOKE OK 출력.
-# 실행: bash smoke.sh   (python3 필요)
+# 실행: bash smoke.sh   (Python 3 필요)
 # 순서: 데이터 형식 검사 → build.sh로 site/data.js 생성 → 화면 파일 확인
 
 cd "$(dirname "$0")" || exit 1
+. scripts/python.sh
 
-python3 - <<'PY'
+"$PY" - <<'PY'
 import json, re, sys
 from collections import defaultdict
 
