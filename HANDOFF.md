@@ -7,8 +7,12 @@
 사이트 화면 완성(샘플 데이터 3개), GitHub에 올림. 다음은 실제 플러그인 스캔 → 사이트 반영.
 
 ## 저장소
-- GitHub: https://github.com/7hyun29/music-plugin-hub (Private), 브랜치 `main`
-- 사용 컴퓨터: Windows(Cubase Pro 15) + Mac(VEP 8, Logic) 두 대. 각자 `git clone`해서 `site/index.html`을 연다
+- GitHub: https://github.com/7hyun29/music-plugin-hub, 브랜치 `main`
+- 사이트 주소(GitHub Pages): https://7hyun29.github.io/music-plugin-hub/ — 두 컴퓨터 모두 이 주소를 즐겨찾기
+  - 루트 index.html이 site/로 이동시킴. Pages 설정: main 브랜치 / (root)
+  - Pages를 무료로 쓰기 위해 저장소를 Public으로 전환하기로 함 (2026-11-25). 설정 완료 여부는 확인 안 됨
+- 사용 컴퓨터: Windows(Cubase Pro 15) + Mac(VEP 8, Logic) 두 대. 데이터를 고칠 때만 각자 `git clone`
+- 이전 문제: 로컬 파일을 즐겨찾기하면 컴퓨터마다 경로가 달라 다른 컴퓨터에서 "file couldn't be accessed" 오류 → Pages 주소로 해결
 - 평소 흐름: `git pull` → 수정 → `bash smoke.sh` → commit → `git push`
 
 ## 진행 순서
@@ -43,7 +47,7 @@
 - 카드/표 선택은 브라우저에 기억됨. 표는 열 제목 클릭으로 정렬
 
 ## 결정된 것
-- 개인용 로컬 사이트. 서버·DB·클라우드·배포 없음, 외부 라이브러리 없음
+- 개인용 사이트. 서버·DB 없음, 외부 라이브러리 없음. 공개는 GitHub Pages 정적 호스팅만
 - Kontakt 라이브러리도 같은 목록, type `Kontakt 라이브러리`
 - 설치 위치는 windows / mac 2칸 (Logic·VEP 구분은 필요하면 태그·메모로)
 - 태그는 자유 입력, smoke.sh가 띄어쓰기·대소문자만 다른 태그를 경고
