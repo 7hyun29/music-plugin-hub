@@ -1,4 +1,4 @@
-# 음악 플러그인 스캔 (Windows)
+﻿# 음악 플러그인 스캔 (Windows)
 # 실행: PowerShell에서  powershell -ExecutionPolicy Bypass -File .\scan_windows.ps1
 # 결과: 바탕화면\plugins_windows.csv
 
