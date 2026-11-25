@@ -10,17 +10,23 @@
 <header class="top">
   <div class="title-row">
     <h1>음악 플러그인 허브</h1>
-    <span id="count" class="muted"></span>
+    <span id="count" class="muted" role="status" aria-live="polite"></span>
     <div class="view-toggle" role="group" aria-label="보기 전환">
-      <button type="button" data-view="card">카드</button>
-      <button type="button" data-view="table">표</button>
+      <button type="button" data-view="card" aria-pressed="false">카드</button>
+      <button type="button" data-view="table" aria-pressed="false">표</button>
     </div>
   </div>
+  <label for="search" class="sr-only">플러그인 검색</label>
   <input id="search" type="search" placeholder="이름, 제조사, 태그, 메모 검색  ( / 키로 바로 입력 )" autocomplete="off" autofocus>
   <div class="filters">
-    <div class="filter-group"><span class="filter-label">종류</span><div id="f-type" class="chips"></div></div>
-    <div class="filter-group"><span class="filter-label">설치 위치</span><div id="f-loc" class="chips"></div></div>
-    <div class="filter-group"><span class="filter-label">포맷</span><div id="f-fmt" class="chips"></div></div>
+    <div class="filter-group" role="group" aria-labelledby="l-type"><span id="l-type" class="filter-label">종류</span><div id="f-type" class="chips"></div></div>
+    <div class="filter-group" role="group" aria-labelledby="l-loc"><span id="l-loc" class="filter-label">설치 위치</span><div id="f-loc" class="chips"></div></div>
+    <div class="filter-group" role="group" aria-labelledby="l-fmt"><span id="l-fmt" class="filter-label">포맷</span><div id="f-fmt" class="chips"></div></div>
+    <div id="g-tag" class="filter-group" role="group" aria-labelledby="l-tag" hidden><span id="l-tag" class="filter-label">태그</span><div id="f-tag" class="chips"></div></div>
+    <div class="filter-foot">
+      <span class="muted">한 줄 안에서는 하나라도 맞으면, 줄끼리는 모두 맞아야 보여요. 위치·포맷은 같은 컴퓨터 기준.</span>
+      <button type="button" id="reset" class="chip" hidden>조건 지우기</button>
+    </div>
   </div>
 </header>
 <main id="list"></main>

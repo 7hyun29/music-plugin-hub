@@ -4,7 +4,7 @@
 마지막 갱신: 2026-11-25
 
 ## 현재 상태 한 줄
-Mac 실제 플러그인 47개 반영 완료(샘플 삭제). 다음은 Windows 스캔 반영 + 종류 검토.
+Mac 47개 반영 + ChatGPT 리뷰 1차 반영(데이터 v2 기기별 설치 기록, 접근성, 검색, 좁은 화면). 다음은 Windows 스캔 반영 + 종류 검토.
 
 ## 저장소
 - GitHub: https://github.com/7hyun29/music-plugin-hub, 브랜치 `main`
@@ -28,8 +28,18 @@ Mac 실제 플러그인 47개 반영 완료(샘플 삭제). 다음은 Windows �
 - 사용자가 각 컴퓨터에서 스캔 → 바탕화면 CSV를 대화에 첨부 → Claude가 `python3 scripts/import_scan.py mac|windows <CSV>` 실행 → smoke → push
   - (처음 제안했던 scan-windows.json / scan-mac.json 분리 구조는 쓰지 않음. 반영을 Claude 한 곳에서만 해서 충돌 걱정이 없음)
 - 묶기·이름·종류 기본값은 data/catalog.json. 새 플러그인이 "catalog.json에 없는 새 이름"으로 나오면 catalog에 추가 후 다시 import
-- import는 기존 항목의 종류·태그·메모를 덮지 않음. 스캔에 없는 항목도 지우지 않고 목록만 출력
+- import는 그 기기의 installs 기록만 교체. 다른 기기 기록·종류·태그·메모는 덮지 않음. 스캔에 없는 항목도 지우지 않고 목록만 출력
 - 설치 경로는 저장하지 않음
+- 데이터 형식 v2 상세는 data/SCHEMA.md
+
+## ChatGPT 리뷰 반영 (2026-11-25, 리뷰 기준 커밋 3bdd72c)
+- 반영함: 기기별 포맷·버전 분리(v2), 위치+포맷 필터를 같은 기기 기록에 적용, Windows "스캔 미반영" 표시,
+  키보드 포커스 유지·aria-pressed/aria-sort/role=status/검색 레이블, 여러 단어 검색·이름 우선 정렬,
+  필터 안내·조건 지우기, 태그 정확 일치 필터(검색어 유지), 320/390px 배치, 긴 이름 줄바꿈, 태그 32px, 대비,
+  smoke.sh에 시리얼·비밀번호 값 검사
+- 판단: 카드 보기는 항상 이름순, 정렬은 표에서만 (카드에는 정렬 표시가 없어 혼란). 검색 300개 기준 5ms라 다시 그리기 최적화는 안 함
+- 후속 기능 후보(아직 안 함): DAW별 필터 프리셋, 플러그인 이름 복사 버튼, 기기별 마지막 스캔 날짜 화면 표시(지금은 위치 칩 툴팁에만)
+- 검증은 작업 환경의 임시 스크립트(Playwright + Chrome)로 함. 저장소에는 넣지 않음 (새 도구 추가 허락 필요)
 
 ## 다음 할 일
 1. Windows 스캔: `powershell -ExecutionPolicy Bypass -File .\scripts\scan_windows.ps1` → plugins_windows.csv 받아서 import
@@ -48,15 +58,15 @@ Mac 실제 플러그인 47개 반영 완료(샘플 삭제). 다음은 Windows �
 ## 사이트 동작
 - site/index.html을 더블클릭으로 열면 됨 (서버 불필요)
 - 데이터 흐름: data/plugins.json → build.sh → site/data.js → 화면
-- 검색은 띄어쓰기·대소문자 무시 ("게임bgm"으로 "게임 BGM" 검색)
-- 필터: 같은 그룹 안은 OR, 그룹끼리는 AND. 칩 숫자는 다른 조건 적용 후 개수
-- 태그 클릭 → 그 태그로 검색. `/` 키로 검색창, Esc로 검색 지우기
-- 카드/표 선택은 브라우저에 기억됨. 표는 열 제목 클릭으로 정렬
+- 검색은 띄어쓰기·대소문자 무시, 여러 단어면 모두 포함 ("UADx Reverb", "Reaktor6"). 이름이 맞는 항목 먼저
+- 필터: 같은 그룹 안은 OR, 그룹끼리는 AND. 위치+포맷은 같은 기기 기준. 칩 숫자는 다른 조건 적용 후 개수
+- 태그 클릭 → 태그 필터 줄에 추가(정확 일치, 검색어 유지). `/` 키로 검색창, Esc로 검색 지우기
+- 카드/표 선택은 브라우저에 기억됨. 카드는 이름순, 표는 열 제목 클릭으로 정렬
 
 ## 결정된 것
 - 개인용 사이트. 서버·DB 없음, 외부 라이브러리 없음. 공개는 GitHub Pages 정적 호스팅만
 - Kontakt 라이브러리도 같은 목록, type `Kontakt 라이브러리`
-- 설치 위치는 windows / mac 2칸 (Logic·VEP 구분은 필요하면 태그·메모로)
+- 설치 위치는 windows / mac 2칸 (Logic·VEP 구분은 필요하면 태그·메모로). 기기별로 포맷·버전 따로 기록
 - 태그는 자유 입력, smoke.sh가 띄어쓰기·대소문자만 다른 태그를 경고
 - smoke.sh·build.sh는 Python 3 필요. scripts/python.sh가 python3/python/py 중 실제로 실행되는 것을 찾음 (Windows의 Store 가짜 python3 대응)
 - .gitattributes로 .sh 줄바꿈 LF 고정 (Windows Git Bash 실행 오류 방지)
