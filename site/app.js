@@ -7,6 +7,16 @@
   var SCANS = DATA.scans || {};
   var TYPE_ORDER = ['오케스트라 라이브러리', 'Kontakt 라이브러리', '가상악기', '신스', '샘플러', 'EQ', '컴프', '리버브',
                     '앰프·새츄레이션', '이펙트', '보컬', 'MIDI 도구', '마스터링', '유틸', '기타'];
+  // 종류별 아이콘 (site/icons). 목록에 없는 종류는 '기타' 아이콘
+  var TYPE_ICON = {
+    '오케스트라 라이브러리': 'orchestra', 'Kontakt 라이브러리': 'kontakt', '가상악기': 'instrument', '신스': 'synth',
+    '샘플러': 'sampler', 'EQ': 'eq', '컴프': 'comp', '리버브': 'reverb', '앰프·새츄레이션': 'saturation',
+    '이펙트': 'effect', '보컬': 'vocal', 'MIDI 도구': 'midi', '마스터링': 'mastering', '유틸': 'utility', '기타': 'etc'
+  };
+  function typeIcon(type) {
+    // 장식용: 옆에 글자가 있으므로 화면 읽기 프로그램에는 숨김
+    return '<img class="ico" src="icons/type-' + (TYPE_ICON[type] || 'etc') + '.png" alt="" aria-hidden="true" width="16" height="16">';
+  }
   var FORMAT_ORDER = ['VST3', 'VST2', 'AU', 'AAX'];
   var MACHINES = [['windows', 'Windows'], ['mac', 'Mac']];
   var LOC_LABEL = { windows: 'Windows', mac: 'Mac' };
@@ -111,7 +121,8 @@
       var title = group === 'loc' ? ' title="마지막 스캔 ' + esc(SCANS[value]) + '"' : '';
       return '<button type="button" class="chip' + (on ? ' on' : '') + '" aria-pressed="' + on + '"' + title +
         ' data-group="' + group + '" data-value="' + esc(value) + '">' +
-        (group === 'tag' ? '#' : '') + esc(label) + '<span class="n">' + n + '</span></button>';
+        (group === 'type' ? typeIcon(value) : '') + (group === 'tag' ? '#' : '') + esc(label) +
+        '<span class="n">' + n + '</span></button>';
     }).join('');
   }
 
@@ -154,7 +165,7 @@
   function renderCards(list) {
     return '<div class="cards">' + list.map(function (p) {
       return '<article class="card">' +
-        '<div class="head"><h3>' + esc(p.name) + '</h3><span class="type">' + esc(p.type) + '</span></div>' +
+        '<div class="head"><h3>' + esc(p.name) + '</h3><span class="type">' + typeIcon(p.type) + esc(p.type) + '</span></div>' +
         '<div class="muted">' + esc(p.vendor) + '</div>' +
         installRows(p) +
         (p.note ? '<p class="note">' + esc(p.note) + '</p>' : '') +

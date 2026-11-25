@@ -17,7 +17,7 @@ GitHub Pages로 공개됨: https://7hyun29.github.io/music-plugin-hub/ (main에 
 - site/data.js는 자동 생성 파일. 직접 고치지 않기
 
 # 문서 지도
-- 사이트: site/index.html (브라우저로 바로 열기) / site/app.js / site/style.css
+- 사이트: site/index.html (브라우저로 바로 열기) / site/app.js / site/style.css / site/icons (로고·종류 아이콘)
 - 진행 상황·다음 할 일: HANDOFF.md (세션 끝날 때 반드시 갱신)
 - 디자인 규칙: design.md
 - 데이터 형식: data/SCHEMA.md / 데이터: data/plugins.json

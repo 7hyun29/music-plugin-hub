@@ -31,7 +31,9 @@ button, input { font: inherit; color: inherit; }
 /* 상단 */
 .top { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
 .title-row { display: flex; align-items: center; gap: 12px; }
-h1 { font-size: 18px; margin: 0; white-space: nowrap; }
+h1 { font-size: 18px; margin: 0; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
+.logo { width: 24px; height: 24px; flex: none; }
+.ico { width: 16px; height: 16px; flex: none; vertical-align: -3px; margin-right: 4px; }
 #count { white-space: nowrap; }
 .view-toggle { margin-left: auto; display: flex; border: 1px solid var(--border); border-radius: var(--r-ctl); overflow: hidden; }
 .view-toggle button { min-height: 32px; padding: 0 16px; white-space: nowrap; background: var(--surface); border: 0; cursor: pointer; color: var(--muted); }
@@ -87,7 +89,7 @@ h1 { font-size: 18px; margin: 0; white-space: nowrap; }
 }
 .card h3 { font-size: 15px; margin: 0; overflow-wrap: anywhere; }
 .card .head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-.card .type { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.card .type { color: var(--muted); font-size: 12px; white-space: nowrap; display: inline-flex; align-items: center; }
 .card .note { margin: 0; overflow-wrap: anywhere; }
 
 /* 표 */
@@ -107,9 +109,10 @@ td.name .tags { margin-top: 4px; font-weight: 400; }
 @media (max-width: 640px) {
   body { padding: 12px; }
   .top { gap: 8px; margin-bottom: 12px; }
-  h1 { font-size: 16px; }
-  .title-row { gap: 8px; flex-wrap: wrap; }
-  .view-toggle button { padding: 0 12px; }
+  h1 { font-size: 15px; gap: 6px; }
+  .logo { width: 20px; height: 20px; }
+  .title-row { gap: 6px; flex-wrap: wrap; }
+  .view-toggle button { padding: 0 8px; }
   .filters { gap: 4px; }
   .filter-group { gap: 8px; }
   .filter-label { width: auto; min-width: 40px; }

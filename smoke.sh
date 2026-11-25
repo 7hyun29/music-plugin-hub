@@ -123,6 +123,10 @@ bash build.sh || exit 1
 for f in site/index.html site/style.css site/app.js site/data.js; do
   [ -s "$f" ] || { echo "FAIL: $f 없음"; exit 1; }
 done
+# 아이콘: app.js가 쓰는 파일이 모두 있는지
+for n in logo $(grep -o "'[a-z]*'" <<<"$(sed -n '/var TYPE_ICON = {/,/};/p' site/app.js)" | tr -d "'" | sed 's/^/type-/'); do
+  [ -s "site/icons/$n.png" ] || { echo "FAIL: site/icons/$n.png 없음"; exit 1; }
+done
 if command -v node >/dev/null 2>&1; then
   node --check site/app.js || { echo "FAIL: site/app.js 문법 오류"; exit 1; }
   node --check site/data.js || { echo "FAIL: site/data.js 문법 오류"; exit 1; }

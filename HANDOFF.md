@@ -55,6 +55,11 @@ Mac 47개 반영 + ChatGPT 리뷰 1차 반영(데이터 v2 기기별 설치 기�
 - 버전은 AAX 외 포맷 우선 (Omnisphere·Keyscape·Trilian AAX는 번호 체계가 다름). Serum 2 AAX만 2.0.24로 다른 포맷(2.1.5)보다 낮음
 - Mac Kontakt 라이브러리는 NI Service Center 목록에서 Abbey Road Two 하나만 잡힘
 
+## 아이콘 (2026-11-25)
+- ChatGPT로 만든 PNG 16개를 사용자가 `assets/music-plugin-icons` 브랜치(bc19661)에 올림 → main에 fast-forward로 합침
+- 로고: 제목 옆 + 파비콘(사이트·루트 index.html). 종류 아이콘: 종류 필터 칩, 카드 종류 표시
+- 원격의 `assets/music-plugin-icons` 브랜치는 남아 있음 (지울지 사용자에게 안 물어봄)
+
 ## 사이트 동작
 - site/index.html을 더블클릭으로 열면 됨 (서버 불필요)
 - 데이터 흐름: data/plugins.json → build.sh → site/data.js → 화면
